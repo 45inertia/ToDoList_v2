@@ -3,7 +3,11 @@
 // 1) Create an item class that has: id, title, description, days (how many days until deadline).
 // 2) Split previous functionality into functions. 
 
+// NEED TO THINK ABOUT AND PLAN BEFORE THE STRUCTURE OF THE FUNCTIONS AND HOW THEY INTERACT
+// WITH EACHOTHER
+
 #include <iostream>
+#include <string>
 
 std::string itemArray[10];
 
@@ -28,10 +32,20 @@ int main() {
 			case 2:
 				std::cout << "\nHow many items would you like to add: ";
 				std::cin >> itemsToAdd;
-				std::cin.ignore();
-				addItemToList(itemsToAdd);
-
+				std::cin.ignore();					// ignores the newline character left in the buffer.
+				if (numItems + itemsToAdd > 10) {
+					std::cout << "Cannot add that many items. Maximum capacity is 10.\n";
+					break;
+				} else {
+					for (int i = 0; i < itemsToAdd; i++) {
+						std::string inputString{};
+						std::cout << "\nPlease enter a string: ";
+						std::getline(std::cin, inputString);
+						addItemToList(inputString, numItems);
+						numItems++;
+					}
 				break;
+				}
 			case 3:
 				removeItemFromList();
 				break;
@@ -62,8 +76,8 @@ void displayList(int numItems) {
 	}
 }
 
-int addItemToList(int itemsToAdd) {
-
+void addItemToList(std::string inputString, int numItems) {
+	itemArray[numItems] = inputString;
 }
 
 int removeItemFromList() {
